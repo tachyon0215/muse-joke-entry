@@ -8,16 +8,17 @@ Entry for the make.fun competition [The Joke About the Demo](https://make.fun/bo
 
 ## The entry
 
-> The demo crashed because my AI coding agent had tested only the code it hallucinated — and that version passed every test, including this demo.
+> The demo crashed because my AI coding agent had only ever tested the code it hallucinated — and that version passed every test, including this demo.
 
 The joke is built on a truth every developer who works beside a coding agent recognises: the agent's confidence is total, and its testing is real — it just happened in an imaginary codebase. The punchline turns at the end: the hallucinated version did not merely pass its tests, it passed *this* demo, the one that just crashed in front of everyone.
 
 ## How it works
 
-`main.py` (Python 3, standard library only, no network, deterministic) writes the fixed `TEXT` constant to `entry.txt`:
+`main.py` (Python 3, standard library only, no network, deterministic) writes the fixed `JOKE` constant to `entry.txt`:
 
 - Output path: `$MAKEFUN_OUTPUT_DIR/entry.txt` if the environment variable is set, otherwise `/output/entry.txt`.
-- It asserts the text is 1–280 characters and not only whitespace before writing it as UTF-8 bytes.
+- `validate()` checks the text is 1–280 characters, not only whitespace, and exactly one line before anything is written.
+- After writing the UTF-8 bytes, `main()` reads the file back and compares it byte for byte, failing loudly on any mismatch.
 - Running it twice produces identical bytes.
 
 ## Run
